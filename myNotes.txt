@@ -1,0 +1,19 @@
+npm install
+
+npm start
+
+imr everywhere
+
+npm install react-router-dom
+
+too make pages routable, we wrap the <App/> with <BrowserRouter>, or a custom made Router
+
+add <route> and path = '/' default page
+
+css nevalja nikad
+
+za liste u .map treba
+identicno ime za props.ime koje se salje iz nadkomponente
+
+card je wrapper i props.children je ono unutar wrappera
+
