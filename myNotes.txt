@@ -17,3 +17,19 @@ identicno ime za props.ime koje se salje iz nadkomponente
 
 card je wrapper i props.children je ono unutar wrappera
 
+for label it is htmlFor
+
+uvijek dotati .json na fetchu
+
+objekte koje saljemo firebaseu pretvaramo u json
+koristeci JSON.stringify()
+
+useHistory ne postoji -> koristimo useNavigate
+navigate('/', {replace: true});
+
+cant use async await cuz realtime load
+
+useEffect(
+    prvi arguemnt je run funkcija, 
+    drugi su varijable koje rerunaju prvi argument)
+
