@@ -34,3 +34,6 @@ useEffect(
     drugi su varijable koje rerunaju prvi argument)
 
 data iz fetchanja nije uvijek najbolja za prikaz
+
+objekt.some returna istinu ak barem jedan objekt postoji s tim vrjednostima
+
