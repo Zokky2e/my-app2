@@ -33,3 +33,4 @@ useEffect(
     prvi arguemnt je run funkcija, 
     drugi su varijable koje rerunaju prvi argument)
 
+data iz fetchanja nije uvijek najbolja za prikaz
