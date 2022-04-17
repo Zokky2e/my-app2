@@ -2,8 +2,22 @@ import { Link } from "react-router-dom";
 import classes from "./MainNavigation.module.css";
 import React, { useContext } from "react";
 import FavoritesContext from "../../store/favorites-context";
+import { auth } from "../../firebase";
 function MainNavigation() {
   const favoritesCtx = useContext(FavoritesContext);
+  const currentUser = auth.currentUser;
+  let content = {
+    pathTo: "/sign-in",
+    text: "Sign In",
+  };
+  if (currentUser === null) {
+    content.pathTo = "/sign-in";
+    content.text = "Sign In";
+  } else {
+    content.pathTo = "/profile";
+    content.text = "Profile";
+    console.log(currentUser?.email);
+  }
 
   return (
     <header className={classes.header}>
@@ -23,6 +37,9 @@ function MainNavigation() {
                 {favoritesCtx.totalFavorites}
               </span>
             </Link>
+          </li>
+          <li>
+            <Link to={content.pathTo}>{content.text}</Link>
           </li>
         </ul>
       </nav>

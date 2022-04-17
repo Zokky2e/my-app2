@@ -1,0 +1,15 @@
+.login{
+    display: inline;
+    font: inherit;
+
+}
+
+.register{
+    display: inline;
+    font: inherit;
+    float: right;
+}
+
+.block{
+    display: block
+}
