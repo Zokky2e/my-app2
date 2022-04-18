@@ -41,9 +41,10 @@ function Register() {
   };
   return (
       <div>
-        <h1>Register</h1>
+        
         {error && <div className={classes.auth_error}>{error}</div>}
         <form onSubmit={register} className={classes.form} name="registration_form">
+        <h1>Register</h1>
           <div className={classes.control}>
             <input
               type="email"

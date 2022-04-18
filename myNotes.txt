@@ -37,3 +37,4 @@ data iz fetchanja nije uvijek najbolja za prikaz
 
 objekt.some returna istinu ak barem jedan objekt postoji s tim vrjednostima
 
+auth u meetupList da se provjeri jel user spojen

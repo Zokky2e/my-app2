@@ -22,12 +22,11 @@ function MeetupItem(props) {
       });
     }
   }
-  function removeMeetupHandler() {
-    remove(ref(db, "/meetups/" + props.id)).then(
-      console.log("meetupItem")
-    ).then(props.onRemove())
-  }
 
+  function removeMeetupHandler() {
+    remove(ref(db, "/meetups/" + props.id))
+      .then(props.onRemove());
+  }
   return (
     <li className={classes.item}>
       <Card>
@@ -40,10 +39,7 @@ function MeetupItem(props) {
           <p>{props.description}</p>
         </div>
         <div className={classes.actions}>
-          <button onClick={toggleFavoriteStatusHandler}>
-            {itemIsFavorite ? "Remove from Favorites" : "To Favorites"}
-          </button>
-          <button onClick={removeMeetupHandler}>Remove</button>
+          
         </div>
       </Card>
     </li>

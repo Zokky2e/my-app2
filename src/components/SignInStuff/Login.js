@@ -18,9 +18,10 @@ function Login() {
   };
   return (
     <div>
-      <h1>Log in</h1>
+      
       {error && <div className={classes.auth_error}>{error}</div>}
       <form onSubmit={login} className={classes.form} name="login_form">
+      <h1>Log in</h1>
         <div className={classes.control}>
           <input
             type="email"
