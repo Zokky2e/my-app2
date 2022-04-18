@@ -2,11 +2,13 @@ import classes from "./MeetupItem.module.css";
 import React, { useContext } from "react";
 import Card from "../ui/Card";
 import FavoritesContext from "../../store/favorites-context";
+import { db } from "../../firebase";
+import { ref, remove } from "firebase/database";
+
 function MeetupItem(props) {
   const favoritesCtx = useContext(FavoritesContext);
 
   const itemIsFavorite = favoritesCtx.itemIsFavorite(props.id);
-
   function toggleFavoriteStatusHandler() {
     if (itemIsFavorite) {
       favoritesCtx.removeFavorite(props.id);
@@ -19,6 +21,11 @@ function MeetupItem(props) {
         description: props.description,
       });
     }
+  }
+  function removeMeetupHandler() {
+    remove(ref(db, "/meetups/" + props.id)).then(
+      console.log("meetupItem")
+    ).then(props.onRemove())
   }
 
   return (
@@ -36,6 +43,7 @@ function MeetupItem(props) {
           <button onClick={toggleFavoriteStatusHandler}>
             {itemIsFavorite ? "Remove from Favorites" : "To Favorites"}
           </button>
+          <button onClick={removeMeetupHandler}>Remove</button>
         </div>
       </Card>
     </li>

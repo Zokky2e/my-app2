@@ -1,11 +1,19 @@
+import { wait } from "@testing-library/user-event/dist/utils";
 import React, { useState, useEffect } from "react";
 import MeetupList from "../components/meetups/MeetupList";
 
 function AllMeetupsPage() {
   const [isLoading, setIsLoading] = useState(true);
+  const [refresher, doRefresh] = useState(false)
+  function deleteHandler(){
+    setIsLoading(true);
+    doRefresh(true);
+  }
   const [loadedMeetups, setLoadingMeetups] = useState([]);
   useEffect(() => {
+    
     setIsLoading(true);
+    wait(50000); //dodan wait jer je deletanje prebrzo za reloadanje
     fetch(
       "https://dummy-app-96a38-default-rtdb.europe-west1.firebasedatabase.app/meetups.json"
     )
@@ -25,8 +33,10 @@ function AllMeetupsPage() {
 
         setIsLoading(false);
         setLoadingMeetups(meetups);
+        doRefresh(false);
+        console.log("refreshed");
       });
-  }, []);
+  }, [refresher]);
   if (isLoading) {
     return <div>Loading....</div>;
   }
@@ -34,7 +44,7 @@ function AllMeetupsPage() {
   return (
     <section>
       <h1>All Meetups</h1>
-      <MeetupList meetups={loadedMeetups} />
+      <MeetupList meetups={loadedMeetups} onRemoveMeetup = {deleteHandler}/>
     </section>
   );
 }
