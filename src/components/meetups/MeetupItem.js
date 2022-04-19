@@ -2,13 +2,13 @@ import classes from "./MeetupItem.module.css";
 import React, { useContext } from "react";
 import Card from "../ui/Card";
 import FavoritesContext from "../../store/favorites-context";
-import { db } from "../../firebase";
+import { auth, db } from "../../firebase";
 import { ref, remove } from "firebase/database";
 
 function MeetupItem(props) {
   const favoritesCtx = useContext(FavoritesContext);
-
-  const itemIsFavorite = favoritesCtx.itemIsFavorite(props.id);
+  const currentUser = auth.currentUser;
+  const itemIsFavorite = favoritesCtx.itemIsFavorite(props);
   function toggleFavoriteStatusHandler() {
     if (itemIsFavorite) {
       favoritesCtx.removeFavorite(props.id);
@@ -24,8 +24,21 @@ function MeetupItem(props) {
   }
 
   function removeMeetupHandler() {
-    remove(ref(db, "/meetups/" + props.id))
-      .then(props.onRemove());
+    remove(ref(db, "/"+currentUser?.uid+"/" + props.id)).then(props.onRemove());
+  }
+
+  let content;
+  if (currentUser !== null) {
+    content = (
+      <div>
+        <button onClick={toggleFavoriteStatusHandler}>
+          {itemIsFavorite ? "Remove from Favorites" : "Add To Favorites"}
+        </button>
+        <button onClick={removeMeetupHandler}>Remove Meetup</button>
+      </div>
+    );
+  } else {
+    content = <div></div>;
   }
   return (
     <li className={classes.item}>
@@ -38,9 +51,7 @@ function MeetupItem(props) {
           <address>{props.address}</address>
           <p>{props.description}</p>
         </div>
-        <div className={classes.actions}>
-          
-        </div>
+        <div className={classes.actions}>{content}</div>
       </Card>
     </li>
   );

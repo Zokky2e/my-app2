@@ -1,9 +1,7 @@
 import React, {} from "react";
-import { auth } from "../../firebase";
 import MeetupItem from "./MeetupItem";
 import classes from "./MeetupList.module.css";
 function MeetupList(props) {
-  const currentUser = auth.currentUser;
   
   function onMeetupRemoveHandler() {
     props.onRemoveMeetup();

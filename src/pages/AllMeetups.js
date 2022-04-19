@@ -1,7 +1,6 @@
 import { wait } from "@testing-library/user-event/dist/utils";
 import React, { useState, useEffect } from "react";
 import MeetupList from "../components/meetups/MeetupList";
-import { auth } from "../firebase";
 
 function AllMeetupsPage() {
   

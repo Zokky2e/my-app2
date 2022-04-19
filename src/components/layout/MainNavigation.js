@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import classes from "./MainNavigation.module.css";
-import React, { useContext } from "react";
-import FavoritesContext from "../../store/favorites-context";
+import React, {} from "react";
 import { auth } from "../../firebase";
 function MainNavigation() {
-  const favoritesCtx = useContext(FavoritesContext);
   const currentUser = auth.currentUser;
+  
+  let loggedInStuff;
   let content = {
     pathTo: "/sign-in",
     text: "Sign In",
@@ -13,9 +13,18 @@ function MainNavigation() {
   if (currentUser === null) {
     content.pathTo = "/sign-in";
     content.text = "Sign In";
+    loggedInStuff = null;
   } else {
     content.pathTo = "/profile";
     content.text = "Profile";
+    loggedInStuff = (
+      <li>
+        <Link to="/favorites">
+          Favorites
+        </Link>
+      </li>
+    );
+    console.log(currentUser?.uid);
     console.log(currentUser?.email);
   }
 
@@ -30,14 +39,7 @@ function MainNavigation() {
           <li>
             <Link to="/new-meetup">New Meetup</Link>
           </li>
-          <li>
-            <Link to="/favorites">
-              Favorites
-              <span className={classes.badge}>
-                {favoritesCtx.totalFavorites}
-              </span>
-            </Link>
-          </li>
+          {loggedInStuff}
           <li>
             <Link to={content.pathTo}>{content.text}</Link>
           </li>
@@ -45,6 +47,6 @@ function MainNavigation() {
       </nav>
     </header>
   );
-}
+  }
 
 export default MainNavigation;

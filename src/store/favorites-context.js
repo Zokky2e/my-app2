@@ -1,35 +1,61 @@
-import React, { createContext, useState } from "react";
+import {set, get, ref, remove } from "firebase/database";
+import React, { createContext} from "react";
+import { auth, db } from "../firebase";
 
 const FavoritesContext = createContext({
-  favorites: [],
-  totalFavorites: 0,
   addFavorite: (favoriteMeetup) => {},
   removeFavorite: (meetupId) => {},
   itemIsFavorite: (meetupId) => {},
 });
 
-export function FavoritesContextProvider(props) {
-  const [userFavorites, setUserFavorites] = useState([]);
 
+export function FavoritesContextProvider(props) {
+  const currentUser = auth.currentUser;
   function addFavoriteHandler(favoriteMeetup) {
-    setUserFavorites((prevUserFavorites) => {
-      return prevUserFavorites.concat(favoriteMeetup);
+    const meetupData = {
+      id: favoriteMeetup.id,
+      title: favoriteMeetup.title,
+      image: favoriteMeetup.image,
+      address: favoriteMeetup.address,
+      description: favoriteMeetup.description,
+    };
+    //set(ref(db, "/"+currentUser?.uid+"/"))
+    fetch(
+      "https://dummy-app-96a38-default-rtdb.europe-west1.firebasedatabase.app/"+currentUser?.uid+"/.json",
+      {
+        method: "POST",
+        body: JSON.stringify(meetupData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    ).then(() => {
+      FavoritesContext.totalFavorites++;
+      
     });
   }
 
   function removeFavoriteHandler(meetupId) {
-    setUserFavorites((prevUserFavorites) => {
-      return prevUserFavorites.filter((meetup) => meetup.id !== meetupId);
+    remove(ref(db, "/"+currentUser?.uid+"/" + meetupId)).then(console.log("added to"+currentUser));
+  }
+
+  function itemIsFavoriteHandler(props) {
+    get(ref(db,"/"+currentUser?.uid+"/")).then((snapshot) => {
+      if (snapshot.exists()) {
+        for(const key in snapshot){
+          if(key.address === props.address)
+          return true;
+        }
+        return false;
+      } else {
+        console.log("No data available");
+      }
+    }).catch((error) => {
+      console.error(error);
     });
   }
 
-  function itemIsFavoriteHandler(meetupId) {
-    return userFavorites.some((meetup) => meetup.id === meetupId);
-  }
-
   const context = {
-    favorites: userFavorites,
-    totalFavorites: userFavorites.length,
     addFavorite: addFavoriteHandler,
     removeFavorite: removeFavoriteHandler,
     itemIsFavorite: itemIsFavoriteHandler,
