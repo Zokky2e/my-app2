@@ -34,7 +34,6 @@ function AllMeetupsPage() {
         setIsLoading(false);
         setLoadingMeetups(meetups);
         doRefresh(false);
-        console.log("refreshed");
       });
   }, [refresher]);
   if (isLoading || refresher) {

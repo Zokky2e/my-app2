@@ -24,8 +24,6 @@ function MainNavigation() {
         </Link>
       </li>
     );
-    console.log(currentUser?.uid);
-    console.log(currentUser?.email);
   }
 
   return (

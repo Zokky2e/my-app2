@@ -1,4 +1,4 @@
-import {set, get, ref, remove } from "firebase/database";
+import {get, ref, remove } from "firebase/database";
 import React, { createContext} from "react";
 import { auth, db } from "../firebase";
 
@@ -48,7 +48,6 @@ export function FavoritesContextProvider(props) {
         }
         return false;
       } else {
-        console.log("No data available");
       }
     }).catch((error) => {
       console.error(error);
