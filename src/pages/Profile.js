@@ -6,10 +6,9 @@ import { useNavigate } from "react-router-dom";
 
 function ProfilePage() {
   const currentUser = auth.currentUser;
-const navigate = useNavigate();
-  function onSignOutHandler(){
-    signOut(auth).then(navigate("/", {replace: true}));
-
+  const navigate = useNavigate();
+  function onSignOutHandler() {
+    signOut(auth).then(navigate("/", { replace: true }));
   }
   return (
     <Card>
